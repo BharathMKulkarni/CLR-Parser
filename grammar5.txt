@@ -1,0 +1,11 @@
+S -> bBe
+B -> PVAF
+P -> pd
+V -> tDV
+V -> tD
+D -> v,D
+D -> v
+A -> vodA
+A -> vod 
+F -> fvodudP
+end

@@ -3,6 +3,7 @@ from collections import OrderedDict
 from pprint import pprint
 import firstfollow
 from firstfollow import production_list, nt_list as ntl, t_list as tl
+from lexical_analyzer import generate_tokens
 nt_list, t_list=[], []
 
 class State:
@@ -241,11 +242,13 @@ def main():
                 else: s+=1      
         if r>0 and s>0: sr+=1
         elif r>0: rr+=1
-    print('_____________________________________________________________________')
+    print('_____________________________________________________________________________________________________________________________________________')
     print("\n", sr, "s/r conflicts |", rr, "r/r conflicts")
-    print('_____________________________________________________________________')
-    print("Enter the string to be parsed")
-    Input=input()+'$'
+    print('_____________________________________________________________________________________________________________________________________________')
+    print("\nPHASE 2 OF A COMPILER : SYNTAX ANALYSIS")
+    print("ENTER THE FILENAME OF THE INPUT PROGRAM TO BE PARSED\n(syntax analysis will be performed on this program according to the grammar provided)")
+    input_filename=input()
+    Input = generate_tokens(input_filename) + '$'
     try:
         stack=['0']
         a=list(table.items())
@@ -279,10 +282,12 @@ def main():
                 stack.append(s)
                 print(*stack,"\t \t\t \t",*Input,sep="")
             elif(b[0][0]=="a"):
-                print("\n\tString Accepted\n")
+                print("\n_____________________________________________________________________________________________________________________________\n")
+                print("RESULT")
+                print("STRING ACCEPTED. INPUT PROGRAM IS SYNTACTICALLY CORRECT")
                 break
     except:
-        print('\n\tString INCORRECT for given Grammar!\n')
+        print('\n\txx STRING NOT ACCEPTED. INPUT PROGRAM IS SYNTACTICALLY WRONG xx\n')
     return 
 
 if __name__=="__main__":

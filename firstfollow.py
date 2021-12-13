@@ -115,22 +115,21 @@ def get_follow(symbol):
 
 def main(pl=None):
 
-    print('''Enter the grammar productions (enter 'end' or return to stop)
-#(Format: "A->Y1Y2..Yn" {Yi - single char} OR "A->" {epsilon})''')
+    print("ENTER THE FILENAME OF THE PRODUCTION RULES:")
+
+    filename = input()
+    F = open(filename,"r")
 
     global production_list, t_list, nt_list
     ctr=1
 
-    #t_regex, nt_regex=r'[a-z\W]', r'[A-Z]'
 
     if pl==None:
 
-        while True:
-
-            #production_list.append(input('{})\t'.format(ctr)))
-            
-            production_list.append(input().replace(' ', ''))
-
+        for line in F:
+            line = line.replace(' ','')
+            line = line.replace('\n','')
+            production_list.append(line)
             if production_list[-1].lower() in ['end', '']: 
                 del production_list[-1]
                 break
