@@ -1,9 +1,9 @@
 BEGIN
      PRINT "HELLO"
-     INTEGER A , B , C
+     INTEGER z , B , C
      REAL   D , E
      STRING X , Y
-     A := 2
+     z := 2
      B := 10
      C := 6
      D := -3.56E-8
