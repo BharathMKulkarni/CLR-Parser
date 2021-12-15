@@ -11,7 +11,9 @@ SYMBOLS = ['(',
            ';',
            ',',
            ':',
-           '\'']
+           '\'',
+           '[',
+           ']']
 
 KEYWORDS = {'t': ['INTEGER', 'REAL','STRING','int'],
             'm': ['main'],
@@ -24,12 +26,13 @@ KEYWORDS = {'t': ['INTEGER', 'REAL','STRING','int'],
             'f': ['FOR','for'],
             'u': ['TO','to'],
             'z': ['do'],
-            'd': ['2','4','6','-3.56E-8','4.567','"text1"','"hello"','1','5','"HELLO"','"Strings"'],
+            'i': ['if'],
+            'y': ['endif','endfor'],
+            'd': ['2','4','6','10','0','-3.56E-8','4.567','"text1"','"hello"','1','5','"HELLO"','"Strings"'],
             'w': ['while'],
             'r':['return']
             }
 
-OPERATORS = ['+', '-', '=',':=','>']
 
 def getIndex(word):
     keys = list(KEYWORDS.keys())
@@ -40,6 +43,8 @@ def getIndex(word):
             return keys[i]
 
 
+
+# TO ADD : SUPPORT FOR STRINGS WITH MULTIPLE WORDS (>2)
 
 def generate_tokens2(filename):
     tokens = []
@@ -79,8 +84,6 @@ def generate_tokens2(filename):
                 continue
             if token in KEYWORDS:
                 tokens.append(token)
-            elif word in OPERATORS:
-                tokens.append('o')
             elif word in SYMBOLS:
                 tokens.append(word)
             elif(re.search(regex_names,word)):
@@ -109,8 +112,6 @@ def generate_tokens(filename):
                 continue
             if token in KEYWORDS:
                 tokens.append(token)
-            elif word in OPERATORS:
-                tokens.append('o')
             elif word in SYMBOLS:
                 tokens.append(word)
             elif(re.search(regex_names,word)):
@@ -122,4 +123,3 @@ def generate_tokens(filename):
     return token_string
 
 
-generate_tokens("input_code_7.txt")
