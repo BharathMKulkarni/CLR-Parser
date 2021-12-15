@@ -8,8 +8,8 @@ BEGIN
      C := 6
      D := -3.56E-8
      E := 4.56
-     X := "text1"
-     Y := "hello"
+     X := "text"
+     Y := "hello" 
  
      FOR I := 1 TO 5  
              PRINT "Strings"

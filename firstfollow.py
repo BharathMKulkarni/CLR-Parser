@@ -148,28 +148,6 @@ def main(pl=None):
                 
             ctr+=1
 
-    '''if pl!=None:
-
-        for i, prod in enumerate(pl):
-
-            if prod.lower() in ['end', '']:
-                del pl[i:]
-                break
-
-            head, body=prod.split('->')
-
-            if head not in nt_list.keys():
-                nt_list[head]=NonTerminal(head)
-
-            #for all terminals in the body of the production
-            for i in finditer(t_regex, body):
-                s=i.group()
-                if s not in t_list.keys(): t_list[s]=Terminal(s)
-
-            #for all non-terminals in the body of the production
-            for i in finditer(nt_regex, body):
-                s=i.group()
-                if s not in nt_list.keys(): nt_list[s]=NonTerminal(s)'''
                 
     return pl
 # ------------------------------------------------------------------

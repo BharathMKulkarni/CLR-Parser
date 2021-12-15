@@ -3,7 +3,7 @@ from collections import OrderedDict
 from pprint import pprint
 import firstfollow
 from firstfollow import production_list, nt_list as ntl, t_list as tl
-from lexical_analyzer import generate_tokens
+from lexical_analyzer import generate_tokens2
 nt_list, t_list=[], []
 
 class State:
@@ -194,40 +194,42 @@ def main():
     global production_list, ntl, nt_list, tl, t_list    
 
     firstfollow.main()
-
-    print("\tFIRST AND FOLLOW OF NON-TERMINALS")
+    print('\n\n__________________________________________________________________________________________________________________________________________________\n')
+    print("FIRST AND FOLLOW OF NON-TERMINALS\n")
     for nt in ntl:
         firstfollow.compute_first(nt)
         firstfollow.compute_follow(nt)
         print(nt)
-        print("\tFirst:\t", firstfollow.get_first(nt))
-        print("\tFollow:\t", firstfollow.get_follow(nt), "\n")  
+        print("\tFIRST:\t", firstfollow.get_first(nt))
+        print("\tFOLLOW:\t", firstfollow.get_follow(nt), "\n")  
     
 
     augment_grammar()
     nt_list=list(ntl.keys())
     t_list=list(tl.keys()) + ['$']
 
-    print(nt_list)
-    print(t_list)
+    print('\n__________________________________________________________________________________________________________________________________________________\n')
+    print("NON TERMINALS : {}\n".format(nt_list))
+    print("TERMINALS : {}".format(t_list))
 
     j=calc_states()
 
     ctr=0
+    print('\n__________________________________________________________________________________________________________________________________________________\n')
+    print("CANONICAL ITEMSETS\n")
     for s in j:
-        print("Item{}:".format(ctr))
+        print("ITEM {}:".format(ctr))
         for i in s:
             print("\t", i)
         ctr+=1
 
     table=make_table(j)
-    print('_____________________________________________________________________')
-    print("\n\tCLR(1) TABLE\n")
+    print('\n__________________________________________________________________________________________________________________________________________________\n')
+    print("\nCLR(1) TABLE\n")
     sym_list = nt_list + t_list
     sr, rr=0, 0
-    print('_____________________________________________________________________')
     print('\t|  ','\t|  '.join(sym_list),'\t\t|')
-    print('_____________________________________________________________________')
+    print('\n__________________________________________________________________________________________________________________________________________________\n')
     for i, j in table.items():
             
         print(i, "\t|  ", '\t|  '.join(list(j.get(sym,' ') if type(j.get(sym))in (str , None) else next(iter(j.get(sym,' ')))  for sym in sym_list)),'\t\t|')
@@ -242,23 +244,27 @@ def main():
                 else: s+=1      
         if r>0 and s>0: sr+=1
         elif r>0: rr+=1
-    print('_____________________________________________________________________________________________________________________________________________')
+    print('\n_____________________________________________________________________________________________________________________________________________\n')
+    print("\nRESULTS OF CLR\n")
     print("\n", sr, "s/r conflicts |", rr, "r/r conflicts")
-    print('_____________________________________________________________________________________________________________________________________________')
-    print("\nPHASE 2 OF A COMPILER : SYNTAX ANALYSIS")
+    print('\n_____________________________________________________________________________________________________________________________________________\n')
+    print("\n\nPHASE 2 OF A COMPILER : SYNTAX ANALYSIS")
     print("ENTER THE FILENAME OF THE INPUT PROGRAM TO BE PARSED\n(syntax analysis will be performed on this program according to the grammar provided)")
     input_filename=input()
-    Input = generate_tokens(input_filename) + '$'
+    Input = generate_tokens2(input_filename) + '$'
+    print('\n_____________________________________________________________________________________________________________________________________________\n')
+    print("INPUT PROGRAM IN THE FORM OF STRING OF TOKENS\n")
+    print(Input)
     try:
         stack=['0']
         a=list(table.items())
-        '''print(a[int(stack[-1])][1][Input[0]])
-        b=list(a[int(stack[-1])][1][Input[0]])
-        print(b[0][0])
-        print(a[0][1]["S"])'''
-        print("productions\t:",production_list)
-        print('stack',"\t \t\t \t",'Input')
-        print(*stack,"\t \t\t \t",*Input,sep="")
+        print('\n_____________________________________________________________________________________________________________________________________________\n')
+        print("PRODUCTIONS\t:",production_list)
+        print('\n_____________________________________________________________________________________________________________________________________________\n')
+        print('\n\n_____________________________________________________________________________________________________________________________________________\n')
+        print('STACK',"\t\t\t\t\t",'INPUT')
+        print('_____________________________________________________________________________________________________________________________________________\n')
+        print(*stack,"\t\t\t\t\t",*Input,sep="")
         while(len(Input)!=0):
             b=list(a[int(stack[-1])][1][Input[0]])
             if(b[0][0]=="s" ):
@@ -266,7 +272,7 @@ def main():
                 stack.append(Input[0])
                 stack.append(b[0][1:])
                 Input=Input[1:]
-                print(*stack,"\t \t\t \t",*Input,sep="")
+                print(*stack,"\t\t\t\t\t",*Input,sep="")
             elif(b[0][0]=="r" ):
                 s=int(b[0][1:])
                 #print(len(production_list),s)
@@ -282,12 +288,16 @@ def main():
                 stack.append(s)
                 print(*stack,"\t \t\t \t",*Input,sep="")
             elif(b[0][0]=="a"):
-                print("\n_____________________________________________________________________________________________________________________________\n")
-                print("RESULT")
+                print('\n_____________________________________________________________________________________________________________________________________________\n')
+                print("RESULT\n")
                 print("STRING ACCEPTED. INPUT PROGRAM IS SYNTACTICALLY CORRECT")
+                print('\n_____________________________________________________________________________________________________________________________________________\n')
                 break
     except:
-        print('\n\txx STRING NOT ACCEPTED. INPUT PROGRAM IS SYNTACTICALLY WRONG xx\n')
+        print('\n_____________________________________________________________________________________________________________________________________________\n')
+        print("RESULT\n")
+        print('\nxx STRING NOT ACCEPTED. INPUT PROGRAM IS SYNTACTICALLY WRONG xx\n')
+        print('\n_____________________________________________________________________________________________________________________________________________\n')
     return 
 
 if __name__=="__main__":

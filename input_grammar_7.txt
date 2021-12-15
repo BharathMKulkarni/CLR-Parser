@@ -1,0 +1,6 @@
+S -> tm()bBe
+B -> AWR
+A -> tvod;
+W -> w(vod)MMew
+M -> vovod;
+R -> rv

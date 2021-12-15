@@ -1,0 +1,9 @@
+int main ( )
+begin
+   int count = 1 ;
+   while ( n > 1 )
+      count = count + 1 ;
+      n = n / 2 ;
+   end while
+ return count
+end 
